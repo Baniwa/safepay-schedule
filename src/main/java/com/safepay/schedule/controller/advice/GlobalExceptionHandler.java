@@ -5,6 +5,7 @@ import com.safepay.schedule.dto.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,6 +48,19 @@ public class GlobalExceptionHandler {
                 "One or more fields failed validation. See 'violations' for details.",
                 request.getRequestURI(),
                 violations
+        );
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiErrorResponse> handleNotReadableException(
+            HttpMessageNotReadableException ex, HttpServletRequest request) {
+
+        ApiErrorResponse body = ApiErrorResponse.of(
+                HttpStatus.BAD_REQUEST.value(),
+                "Malformed Request",
+                "The request body is missing or contains invalid JSON.",
+                request.getRequestURI()
         );
         return ResponseEntity.badRequest().body(body);
     }
