@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class PaymentScheduleService {
@@ -20,6 +21,14 @@ public class PaymentScheduleService {
 
     public PaymentScheduleService(PaymentScheduleRepository repository) {
         this.repository = repository;
+    }
+
+    @Transactional(readOnly = true)
+    public List<SchedulePaymentResponse> findAll() {
+        return repository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(SchedulePaymentResponse::from)
+                .toList();
     }
 
     @Transactional

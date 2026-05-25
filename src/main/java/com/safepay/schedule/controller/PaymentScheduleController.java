@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/payment-schedules")
 @Tag(name = "Payment Schedules", description = "Endpoints for managing payment scheduling operations")
@@ -24,6 +26,17 @@ public class PaymentScheduleController {
 
     public PaymentScheduleController(PaymentScheduleService service) {
         this.service = service;
+    }
+
+    @GetMapping
+    @Operation(
+            summary = "List all payment schedules",
+            description = "Returns all scheduled payment transfers ordered by creation date."
+    )
+    @ApiResponse(responseCode = "200", description = "Schedule list retrieved successfully",
+            content = @Content(schema = @Schema(implementation = SchedulePaymentResponse.class)))
+    public ResponseEntity<List<SchedulePaymentResponse>> listAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
