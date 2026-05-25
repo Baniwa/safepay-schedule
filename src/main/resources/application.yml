@@ -3,9 +3,9 @@ spring:
     name: safepay-schedule-api
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/safepay_db
-    username: safepay_user
-    password: safepay_pass
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:safepay_db}
+    username: ${PGUSER:safepay_user}
+    password: ${PGPASSWORD:safepay_pass}
     driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 10
@@ -27,7 +27,7 @@ spring:
     locations: classpath:db/migration
 
 server:
-  port: 8080
+  port: ${PORT:8080}
   error:
     include-message: never
     include-binding-errors: never
