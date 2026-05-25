@@ -5,7 +5,6 @@ import com.safepay.schedule.domain.exception.BusinessException;
 import com.safepay.schedule.dto.SchedulePaymentRequest;
 import com.safepay.schedule.dto.SchedulePaymentResponse;
 import com.safepay.schedule.repository.PaymentScheduleRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
